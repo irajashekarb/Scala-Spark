@@ -11,8 +11,8 @@ object WordCount {
       val wc = input
         .map(_.toLowerCase)
         .flatMap(text => text.split("""\W+"""))
-        .groupBy(word => word)
-        .mapValues(group => group.size)
+        .map(word => (word, 1))
+        .reduceByKey((n1, n2) => n1 + n2)
 
       println("Writing output to: $outpath")
       wc.saveAsTextFile(outpath)
